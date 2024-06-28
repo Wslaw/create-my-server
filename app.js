@@ -18,7 +18,7 @@ mongoose
   .then(() => console.log("MongoDB is conected"))
   .catch(() => console.log(error));
 
-app.use(morgan());
+app.use(morgan("combined"));
 app.use(cors());
 app.use(express.json());
 
