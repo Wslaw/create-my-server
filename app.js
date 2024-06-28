@@ -1,30 +1,36 @@
 import express from "express";
-import authRoutes from "./Routes/auth.js";
-import analyticsRoutes from "./Routes/analytics.js";
-import categoryRoutes from "./Routes/category.js";
-import orderRoutes from "./Routes/order.js";
-import positionRoutes from "./Routes/position.js";
+import passport from "passport";
+import authRoutes from "./routes/auth.js";
+import analyticsRoutes from "./routes/analytics.js";
+import categoryRoutes from "./routes/category.js";
+import orderRoutes from "./routes/order.js";
+import positionRoutes from "./routes/position.js";
 import cors from "cors";
-// для обработки cors запросов(в случае когда клиент и сервер на разных доменах)
 import morgan from "morgan";
-// для более красивого логирования определенные запросы, т.е. смотреть что происходит с сервером в данный момент
 import mongoose from "mongoose";
-import *as keys from "./config/keys.js";
-
+import * as keys from "./config/keys.js";
+import passportConfig from "./middleware/passport.js"; // убедитесь, что путь верный
 
 const app = express();
+
+// Подключение к MongoDB
 mongoose
   .connect(keys.mongoURI)
-  .then(() => console.log("MongoDB is conected"))
-  .catch(() => console.log(error));
+  .then(() => console.log("MongoDB is connected"))
+  .catch((error) => console.log(error));
 
+// Настройка Passport.js
+app.use(passport.initialize());
+passportConfig(passport);
+
+// Middleware
 app.use(morgan("combined"));
 app.use(cors());
 app.use(express.json());
 
+// Маршруты
 app.use("/api/auth", authRoutes);
 app.use("/api/analytics", analyticsRoutes);
-0;
 app.use("/api/category", categoryRoutes);
 app.use("/api/order", orderRoutes);
 app.use("/api/position", positionRoutes);

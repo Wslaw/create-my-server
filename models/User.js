@@ -15,4 +15,5 @@ const userSchema = new Schema({
   },
 });
 const User = mongoose.model("users", userSchema);
+console.log("Це є модель Usera => ", User);
 export default User;

@@ -1,5 +1,5 @@
 export const getAll = (req, res) => {
-    
+    res.json({message:'Categories'})
 };
 export const getById = (req, res) => {
 
